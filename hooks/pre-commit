@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+# Git pre-commit hook для автоматической проверки качества кода с помощью flake8.
+# Задание повышенной сложности №4 (Лабораторная работа №1).
+
+echo "=== [Git Hook: pre-commit] Запуск проверки кода flake8 ==="
+
+# Получаем список изменённых / добавленных файлов Python, подготовленных к коммиту (staged)
+STAGED_PY_FILES=$(git diff --cached --name-only --diff-filter=ACM | grep '\.py$')
+
+if [ -z "$STAGED_PY_FILES" ]; then
+    echo "Python-файлы в коммите не обнаружены. Проверка flake8 пропущена."
+    exit 0
+fi
+
+echo "Проверяемые файлы:"
+echo "$STAGED_PY_FILES"
+
+# Проверяем наличие flake8
+if command -v flake8 >/dev/null 2>&1; then
+    FLAKE8_CMD="flake8"
+elif python -m flake8 --version >/dev/null 2>&1; then
+    FLAKE8_CMD="python -m flake8"
+elif py -m flake8 --version >/dev/null 2>&1; then
+    FLAKE8_CMD="py -m flake8"
+else
+    echo "ВНИМАНИЕ: flake8 не установлен в текущем окружении. Запуск синтаксической проверки python -m py_compile..."
+    for file in $STAGED_PY_FILES; do
+        python -m py_compile "$file"
+        if [ $? -ne 0 ]; then
+            echo "ОШИБКА: Синтаксическая ошибка в файле $file!"
+            exit 1
+        fi
+    done
+    echo "Синтаксическая проверка файлов успешно пройдена."
+    exit 0
+fi
+
+# Запуск flake8 на staged файлах
+$FLAKE8_CMD $STAGED_PY_FILES --max-line-length=120
+STATUS=$?
+
+if [ $STATUS -ne 0 ]; then
+    echo "================================================================"
+    echo "ОШИБКА: Проверка flake8 не прошла! Исправьте замечания перед коммитом."
+    echo "================================================================"
+    exit 1
+fi
+
+echo "Проверка flake8 успешно пройдена без замечаний!"
+exit 0
