@@ -1,4 +1,4 @@
-"""
+﻿"""
 Модуль калькулятора математических операций.
 Используется для демонстрации работы с СКВ Git.
 """
@@ -20,10 +20,10 @@ def multiply(a: float, b: float) -> float:
 
 
 def divide(a: float, b: float) -> float:
-    """Деление первого числа на второе с проверкой деления на ноль."""
+    """Безопасное деление чисел a и b с проверкой входных данных."""
     if b == 0:
-        raise ZeroDivisionError("Деление на ноль невозможно.")
-    return a / b
+        raise ZeroDivisionError("Деление на ноль строго запрещено математикой.")
+    return float(a / b)
 
 
 def calculate_power(base: float, exponent: float) -> float:
