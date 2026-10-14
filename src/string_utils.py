@@ -17,5 +17,6 @@ def is_palindrome(s: str) -> bool:
 
 def count_vowels(s: str) -> int:
     """Подсчитывает количество гласных букв в строке."""
-    vowels = set("aeiouyаеёиоуыэюя")
+    vowels = set("aeiouаеёиоуыэюя")
     return sum(1 for ch in s.lower() if ch in vowels)
+
