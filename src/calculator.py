@@ -20,10 +20,10 @@ def multiply(a: float, b: float) -> float:
 
 
 def divide(a: float, b: float) -> float:
-    """Безопасное деление чисел a и b с проверкой входных данных."""
+    """Безопасное деление числа a на b с проверкой нуля и округлением до 4 знаков."""
     if b == 0:
         raise ZeroDivisionError("Деление на ноль строго запрещено математикой.")
-    return float(a / b)
+    return round(float(a / b), 4)
 
 
 def calculate_power(base: float, exponent: float) -> float:
