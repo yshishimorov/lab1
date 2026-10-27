@@ -166,14 +166,3 @@ python -m unittest discover tests
 *Результат: 8 тестов успешно пройдено (OK).*
 
 ---
-
-## 📦 Инструкция по отправке на GitHub и сдаче
-
-1. Создайте на GitHub новый публичный репозиторий `lab1` (или `programming-methods-lab1`).
-2. Привяжите репозиторий и отправьте все ветки и теги:
-   ```bash
-   git remote add origin https://github.com/yshishimorov/<имя_репозитория>.git
-   git push -u origin main
-   git push --all; git push --tags
-   ```
-3. Отправьте ссылку на репозиторий боту `@NoMercy_Review_bot` в Telegram отдельным сообщением.
